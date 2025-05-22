@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dragon Curve Visualizer</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  let len = 200;
+  let depth = 10; // Reduced depth for better performance
+  let pieces = [];
+  let r, g, b;
+  let rIncrement, gIncrement, bIncrement; // Variables to store random increments
+  let startTime; // Variable to track the start time
+
+  function setup() {
+    createCanvas(windowWidth, windowHeight);
+    background(0);
+    noStroke();
+    r = random(255);
+    g = random(255);
+    b = random(255);
+
+    // Initialize random increments for color changes
+    rIncrement = random(0.1, 0.5);
+    gIncrement = random(0.1, 0.5);
+    bIncrement = random(0.1, 0.5);
+
+    startTime = millis(); // Record the start time
+    translate(width / 2 - len / 2, height / 2);
+    generateDragon(len, depth, true, 0, width / 2 - len / 2, height / 2);
+  }
+
+  function draw() {
+    background(0, 10); // Reduced fade effect
+
+    // Animate colors with random increments
+    r = (r + rIncrement) % 255;
+    g = (g + gIncrement) % 255;
+    b = (b + bIncrement) % 255;
+
+    // Update and draw particles
+    pieces.forEach((p) => {
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Apply the updated colors to each particle
+      fill(r, g, b, p.alpha);
+      ellipse(p.x, p.y, p.w, p.h);
+
+      p.vx += random(-0.1, 0.1);
+      p.vy += random(-0.1, 0.1);
+    });
+
+    // Check if 1 minute has passed
+    if (millis() - startTime > 60000) { // 60,000 milliseconds = 1 minute
+      resetSketch(); // Reset the sketch
+    }
+
+    // Limit the number of particles
+    if (pieces.length > 1000) {
+      pieces.shift(); // Remove the oldest particle
+    }
+  }
+
+  function generateDragon(len, depth, flip, angle, x, y) {
+    if (depth === 0) {
+      // Add a single particle at the base case
+      let offsetX = random(-5, 5);
+      let offsetY = random(-5, 5);
+
+      pieces.push({
+        x: x + offsetX,
+        y: y + offsetY,
+        w: len / 2,
+        h: len / 2,
+        vx: random(-1, 1),
+        vy: random(-1, 1),
+        alpha: 255, // Keep alpha constant
+      });
+    } else {
+      let newLen = len / sqrt(2);
+      let angle1 = angle + (flip ? -PI / 4 : PI / 4);
+
+      push();
+      generateDragon(newLen, depth - 1, true, angle1, x, y);
+      pop();
+
+      let x1 = x + newLen * cos(angle1);
+      let y1 = y + newLen * sin(angle1);
+      let angle2 = angle + (flip ? PI / 4 : -PI / 4);
+
+      push();
+      generateDragon(newLen, depth - 1, false, angle2, x1, y1);
+      pop();
+    }
+  }
+
+  function resetSketch() {
+    // Clear particles and regenerate the dragon curve
+    pieces = [];
+    background(0);
+
+    // Reset colors and random increments
+    r = random(255);
+    g = random(255);
+    b = random(255);
+    rIncrement = random(0.1, 0.5);
+    gIncrement = random(0.1, 0.5);
+    bIncrement = random(0.1, 0.5);
+
+    startTime = millis(); // Reset the start time
+    translate(width / 2 - len / 2, height / 2);
+    generateDragon(len, depth, true, 0, width / 2 - len / 2, height / 2);
+  }
+</script>
+
+</body>
+</html>
