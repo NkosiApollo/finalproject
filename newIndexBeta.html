@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website with Screensaver</title>
+
+  <!-- Fonts and styles -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Ribeye&display=swap" rel="stylesheet">
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    .banner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background: #333;
+      color: white;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+
+    .navbar ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .content {
+      padding: 50px;
+      text-align: center;
+    }
+
+    .version-text {
+      position: fixed;
+      right: 16px;
+      bottom: 12px;
+      color: #747070;
+      font-size: 0.95em;
+      font-family: Arial, sans-serif;
+      opacity: 0.8;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Screensaver overlay */
+    #screensaver {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Website Content -->
+  <div class="banner">
+    <div class="navbar">
+      <img src="logo.png" class="logo" alt="Logo" style="height: 40px;">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <h1>Welcome to Our Website</h1>
+      <p>Your one-stop solution for all your needs.</p>
+      <button type="button"><span></span>Check it out</button>
+    </div>
+
+    <div class="version-text">Version 1.1</div>
+  </div>
+
+  <!-- Screensaver Canvas -->
+  <div id="screensaver"></div>
+
+  <!-- p5.js -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+
+  <script>
+    let len = 200;
+    let depth = 10;
+    let pieces = [];
+    let r, g, b;
+    let rIncrement, gIncrement, bIncrement;
+    let startTime;
+    let screensaverActive = false;
+    let inactivityTimeout;
+
+    function showScreensaver() {
+      document.getElementById('screensaver').style.display = 'block';
+      screensaverActive = true;
+      new p5(screensaverSketch, document.getElementById('screensaver'));
+    }
+
+    function hideScreensaver() {
+      const saver = document.getElementById('screensaver');
+      saver.innerHTML = ''; // clear canvas
+      saver.style.display = 'none';
+      screensaverActive = false;
+    }
+
+    function resetInactivityTimer() {
+      if (screensaverActive) hideScreensaver();
+      clearTimeout(inactivityTimeout);
+      inactivityTimeout = setTimeout(showScreensaver, 300000); // 5 minutes
+    }
+
+    // Watch for user activity
+    ['mousemove', 'keydown', 'touchstart', 'click'].forEach(evt =>
+      window.addEventListener(evt, resetInactivityTimer)
+    );
+
+    resetInactivityTimer();
+
+    const screensaverSketch = (p) => {
+      p.setup = function () {
+        p.createCanvas(p.windowWidth, p.windowHeight);
+        p.background(0);
+        p.noStroke();
+        r = p.random(255);
+        g = p.random(255);
+        b = p.random(255);
+        rIncrement = p.random(0.1, 0.5);
+        gIncrement = p.random(0.1, 0.5);
+        bIncrement = p.random(0.1, 0.5);
+        startTime = p.millis();
+        generateDragon(len, depth, true, 0, p.width / 2 - len / 2, p.height / 2);
+      };
+
+      p.draw = function () {
+        p.background(0, 10);
+        r = (r + rIncrement) % 255;
+        g = (g + gIncrement) % 255;
+        b = (b + bIncrement) % 255;
+
+        pieces.forEach((pt) => {
+          pt.x += pt.vx;
+          pt.y += pt.vy;
+          p.fill(r, g, b, pt.alpha);
+          p.ellipse(pt.x, pt.y, pt.w, pt.h);
+          pt.vx += p.random(-0.1, 0.1);
+          pt.vy += p.random(-0.1, 0.1);
+        });
+
+        if (p.millis() - startTime > 60000) resetSketch();
+
+        if (pieces.length > 1000) pieces.shift();
+      };
+
+      function generateDragon(len, depth, flip, angle, x, y) {
+        if (depth === 0) {
+          pieces.push({
+            x: x + p.random(-5, 5),
+            y: y + p.random(-5, 5),
+            w: len / 2,
+            h: len / 2,
+            vx: p.random(-1, 1),
+            vy: p.random(-1, 1),
+            alpha: 255,
+          });
+        } else {
+          const newLen = len / Math.sqrt(2);
+          const angle1 = angle + (flip ? -p.PI / 4 : p.PI / 4);
+          generateDragon(newLen, depth - 1, true, angle1, x, y);
+          const x1 = x + newLen * Math.cos(angle1);
+          const y1 = y + newLen * Math.sin(angle1);
+          const angle2 = angle + (flip ? p.PI / 4 : -p.PI / 4);
+          generateDragon(newLen, depth - 1, false, angle2, x1, y1);
+        }
+      }
+
+      function resetSketch() {
+        pieces = [];
+        p.background(0);
+        r = p.random(255);
+        g = p.random(255);
+        b = p.random(255);
+        rIncrement = p.random(0.1, 0.5);
+        gIncrement = p.random(0.1, 0.5);
+        bIncrement = p.random(0.1, 0.5);
+        startTime = p.millis();
+        generateDragon(len, depth, true, 0, p.width / 2 - len / 2, p.height / 2);
+      }
+    };
+  </script>
+</body>
+</html>
