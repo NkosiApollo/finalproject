@@ -1,73 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Us</title>
+  <title>About</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Ribeye&display=swap" rel="stylesheet">
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: Arial, sans-serif;
-    }
-    .banner {
-      position: relative;
-      z-index: 1;
-    }
-    .navbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-      background: #333;
-      color: white;
-    }
-    .navbar ul {
-      list-style: none;
-      display: flex;
-      gap: 15px;
-    }
-    .navbar ul li a {
-      color: white;
-      text-decoration: none;
-    }
-    .content {
-      padding: 50px;
-      text-align: center;
-    }
-    .version-text {
-      position: fixed;
-      right: 16px;
-      bottom: 12px;
-      color: #747070;
-      font-size: 0.95em;
-      font-family: Arial, sans-serif;
-      opacity: 0.8;
-      z-index: 2;
-      pointer-events: none;
-    }
-    #screensaver {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
-      z-index: 9999;
-    }
-  </style>
 </head>
 <body>
   <div class="banner">
     <div class="navbar">
-      <img src="logo.png" class="logo" alt="Logo" style="height: 40px;">
+      <img src="logo.png" class="logo" alt="Logo">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -80,6 +22,33 @@
       <p>Learn more about our company, our mission, and our team.</p>
     </div>
   </div>
-  <div class="version-text">Version 2.1.1</div>
+  <div class="version-text">Version 2.2.1</div>
+  <div id="screensaver"></div>
+  <script>
+    let idleTime = 0;
+    let screensaverActive = false;
+    const screensaver = document.getElementById('screensaver');
+    const resetIdleTimer = () => {
+      idleTime = 0;
+      if (screensaverActive) {
+        screensaver.style.display = 'none';
+        screensaverActive = false;
+      }
+    };
+    const startIdleTimer = () => {
+      idleTime++;
+      if (idleTime > 5 && !screensaverActive) {
+        screensaver.style.display = 'block';
+        screensaverActive = true;
+      }
+    };
+    window.onload = () => {
+      setInterval(startIdleTimer, 1000);
+      document.onmousemove = resetIdleTimer;
+      document.onkeypress = resetIdleTimer;
+      document.onclick = resetIdleTimer;
+    };
+  </script>
 </body>
 </html>
+
