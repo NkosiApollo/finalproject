@@ -1,3 +1,4 @@
+
 /* Reset & Base Typography */
 * {
   margin: 0;
@@ -28,7 +29,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #333; /* Assuming you're keeping the dark navbar */
+  background: #333; /* Dark navbar */
   color: white;
 }
 
@@ -48,18 +49,19 @@ html, body {
 
 .navbar ul li a {
   text-decoration: none;
-  color: #141414;
+  color: #fff;
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 .navbar ul li a::after {
   content: '';
   height: 3px;
   width: 0;
-  background: #000000;
+  background: #fff;
   position: absolute;
   left: 0;
-  bottom: -1px;
+  bottom: -5px;
   transition: 0.5s;
 }
 
@@ -98,6 +100,27 @@ html, body {
   line-height: 25px;
 }
 
+/* Version Text */
+.version-text {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Screensaver */
+#screensaver {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+}
+
 /* Buttons */
 button {
   font-family: "Cherry Bomb One", system-ui;
@@ -105,5 +128,28 @@ button {
   padding: 15px 0;
   text-align: center;
   margin: 20px 10px;
-  border-radius: 25px
+  border-radius: 25px;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
+button:hover {
+  background-color: #444;
+}
+
+/* Input & Textarea Styles (for contact form) */
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 60%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  resize: vertical;
+}
