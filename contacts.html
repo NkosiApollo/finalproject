@@ -3,70 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Us</title>
+  <title>Contact</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Ribeye&display=swap" rel="stylesheet">
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: Arial, sans-serif;
-    }
-    .banner {
-      position: relative;
-      z-index: 1;
-    }
-    .navbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
-      background: #333;
-      color: white;
-    }
-    .navbar ul {
-      list-style: none;
-      display: flex;
-      gap: 15px;
-    }
-    .navbar ul li a {
-      color: white;
-      text-decoration: none;
-    }
-    .content {
-      padding: 50px;
-      text-align: center;
-    }
-    .version-text {
-      position: fixed;
-      right: 16px;
-      bottom: 12px;
-      color: #747070;
-      font-size: 0.95em;
-      font-family: Arial, sans-serif;
-      opacity: 0.8;
-      z-index: 2;
-      pointer-events: none;
-    }
-    #screensaver {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
-      z-index: 9999;
-    }
-  </style>
 </head>
 <body>
   <div class="banner">
     <div class="navbar">
-      <img src="logo.png" class="logo" alt="Logo" style="height: 40px;">
+      <img src="logo.png" class="logo" alt="Logo">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -77,15 +20,41 @@
     <div class="content">
       <h1>Contact Us</h1>
       <p>You can reach us at <a href="mailto:info@example.com">info@example.com</a> or use the form below.</p>
-      <!-- Example contact form -->
       <form>
         <input type="text" placeholder="Your Name" required><br><br>
         <input type="email" placeholder="Your Email" required><br><br>
         <textarea placeholder="Your Message" required></textarea><br><br>
-        <button type="submit">Send</button>
+        <button type="submit"><span></span>Send</button>
       </form>
     </div>
   </div>
   <div class="version-text">Version 2.1.1</div>
+  <div id="screensaver"></div>
+  <script>
+    let idleTime = 0;
+    let screensaverActive = false;
+    const screensaver = document.getElementById('screensaver');
+    const resetIdleTimer = () => {
+      idleTime = 0;
+      if (screensaverActive) {
+        screensaver.style.display = 'none';
+        screensaverActive = false;
+      }
+    };
+    const startIdleTimer = () => {
+      idleTime++;
+      if (idleTime > 5 && !screensaverActive) {
+        screensaver.style.display = 'block';
+        screensaverActive = true;
+      }
+    };
+    window.onload = () => {
+      setInterval(startIdleTimer, 1000);
+      document.onmousemove = resetIdleTimer;
+      document.onkeypress = resetIdleTimer;
+      document.onclick = resetIdleTimer;
+    };
+  </script>
 </body>
 </html>
+
