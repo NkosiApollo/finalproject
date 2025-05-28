@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Home</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  <script src="dragon-screensaver.js" defer></script>
 </head>
 <body>
   <div class="banner">
     <div class="navbar">
-      <img src="logo.png" class="logo" alt="Logo">
+      <img src="logo.png" class="logo" alt="Logo" />
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -23,32 +25,8 @@
     </div>
   </div>
   <div class="version-text">Version 2.2.1</div>
-  <div id="screensaver"></div>
-  <script>
-    let idleTime = 0;
-    let screensaverActive = false;
-    const screensaver = document.getElementById('screensaver');
-    const resetIdleTimer = () => {
-      idleTime = 0;
-      if (screensaverActive) {
-        screensaver.style.display = 'none';
-        screensaverActive = false;
-      }
-    };
-    const startIdleTimer = () => {
-      idleTime++;
-      if (idleTime > 5 && !screensaverActive) {
-        screensaver.style.display = 'block';
-        screensaverActive = true;
-      }
-    };
-    window.onload = () => {
-      setInterval(startIdleTimer, 1000);
-      document.onmousemove = resetIdleTimer;
-      document.onkeypress = resetIdleTimer;
-      document.onclick = resetIdleTimer;
-    };
-  </script>
+
+  <div id="screensaver" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999;"></div>
 </body>
 </html>
 
