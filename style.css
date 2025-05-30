@@ -29,7 +29,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #333; /* Dark navbar */
+  background: transparent; /* Dark navbar */
   color: white;
 }
 
@@ -49,7 +49,7 @@ html, body {
 
 .navbar ul li a {
   text-decoration: none;
-  color: #fff;
+  color: #000000;
   text-transform: uppercase;
   font-weight: bold;
 }
