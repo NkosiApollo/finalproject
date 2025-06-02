@@ -14,7 +14,7 @@ html, body {
 .banner {
   width: 100%;
   height: 100vh;
-  background: url('Background.png') no-repeat center center/cover;
+  background: url('New_Background.png') no-repeat center center/cover;  
   background-size: cover;
   background-position: center;
   position: relative;
@@ -29,7 +29,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: transparent; /* Dark navbar */
+  background: transparent;
   color: white;
 }
 
@@ -49,7 +49,7 @@ html, body {
 
 .navbar ul li a {
   text-decoration: none;
-  color: #000000;
+  color: #1a1b22;
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -81,7 +81,7 @@ html, body {
   width: 100%;
   padding: 50px;
   text-align: center;
-  color: #000;
+  color: #1a1b22;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
