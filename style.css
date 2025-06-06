@@ -1,126 +1,3 @@
-
-/* Reset & Base Typography */
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Cherry Bomb One", system-ui;
-}
-
-html, body {
-  height: 100%;
-}
-
-/* Banner Section */
-.banner {
-  width: 100%;
-  height: 100vh;
-  background: url('New_Background.png') no-repeat center center/cover;  
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  z-index: 1;
-}
-
-/* Navbar */
-.navbar {
-  width: 85%;
-  margin: 0 auto;
-  padding: 35px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: transparent;
-  color: white;
-}
-
-.navbar ul {
-  list-style: none;
-  display: flex;
-  gap: 15px;
-  padding: 0;
-  margin: 0;
-}
-
-.navbar ul li {
-  display: inline-block;
-  margin: 0 20px;
-  position: relative;
-}
-
-.navbar ul li a {
-  text-decoration: none;
-  color: #1a1b22;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.navbar ul li a::after {
-  content: '';
-  height: 3px;
-  width: 0;
-  background: #fff;
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  transition: 0.5s;
-}
-
-.navbar ul li a:hover::after {
-  width: 100%;
-}
-
-/* Logo */
-.logo {
-  width: 120px;
-  height: auto;
-  cursor: pointer;
-}
-
-/* Content */
-.content {
-  width: 100%;
-  padding: 50px;
-  text-align: center;
-  color: #1a1b22;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.content h1 {
-  font-size: 70px;
-  margin-top: 80px;
-  font-family: "Ribeye", serif;
-}
-
-.content p {
-  font-family: "Cherry Bomb One", system-ui;
-  margin: 20px auto;
-  font-weight: 100;
-  line-height: 25px;
-}
-
-/* Version Text */
-.version-text {
-  position: absolute;
-  bottom: 10px;
-  right: 20px;
-  font-size: 14px;
-  color: #555;
-}
-
-/* Screensaver */
-#screensaver {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.85);
-  z-index: 1000;
-}
-
 /* Buttons */
 button {
   font-family: "Cherry Bomb One", system-ui;
@@ -153,3 +30,88 @@ textarea {
   box-sizing: border-box;
   resize: vertical;
 }
+
+/* Planner Grid Container */
+#garden-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-auto-rows: 60px;
+  gap: 6px;
+  width: 620px;  /* slightly bigger to accommodate gaps */
+  margin: 20px auto;
+  background-color: #e5e5e5;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Individual Grid Cells */
+#garden-grid > div.grid-cell {
+  border: 1px solid #ccc;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+/* Compatibility Legend */
+#compatibility-legend {
+  max-width: 620px;
+  margin: 10px auto;
+  font-family: system-ui, sans-serif;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 6px 0;
+  font-size: 1rem;
+}
+
+.legend-color {
+  width: 25px;
+  height: 25px;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.legend-color.good {
+  background-color: #c8e6c9; /* light green */
+  border: 1px solid #4caf50;
+}
+
+.legend-color.bad {
+  background-color: #ffcdd2; /* light red */
+  border: 1px solid #f44336;
+}
+
+/* Plant Palette */
+#plant-palette {
+  max-width: 620px;
+  margin: 20px auto;
+  display: flex;
+  gap: 15px;
+  font-size: 2rem;
+  justify-content: center;
+}
+
+#plant-palette .plant {
+  user-select: none;
+  cursor: grab;
+  padding: 8px 15px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+#plant-palette .plant:active {
+  cursor: grabbing;
+  border-color: #555;
+}
+
