@@ -58,16 +58,17 @@ for (let i = 0; i < gridSize * gridSize; i++) {
     e.preventDefault();
     const plant = e.dataTransfer.getData("text/plain");
     const icon = plantIcons[plant] || plantIcons["custom"];
+    const normalized = plant.toLowerCase().replace(/\s/g, "");
 
     if (plant === "custom") {
       const name = prompt("Enter custom plant name:", "Custom Plant");
       if (name) {
         cell.textContent = name;
-        cell.dataset.plant = name.toLowerCase();
+        cell.dataset.plant = name.toLowerCase().replace(/\s/g, "");
       }
     } else {
       cell.textContent = icon;
-      cell.dataset.plant = plant;
+      cell.dataset.plant = normalized;
     }
 
     updateCompatibilityColors();
@@ -92,7 +93,7 @@ function updateCompatibilityColors() {
 
   for (let i = 0; i < cells.length; i++) {
     const cell = cells[i];
-    const plant = cell.dataset.plant;
+    const plant = cell.dataset.plant?.toLowerCase().replace(/\s/g, "");
     if (!plant || plant === "nonland") continue;
 
     const compatibility = compatibilityMap[plant] || { good: [], bad: [] };
@@ -107,7 +108,7 @@ function updateCompatibilityColors() {
     neighbors.forEach((n) => {
       if (n >= 0 && n < cells.length) {
         const neighborCell = cells[n];
-        const neighborPlant = neighborCell.dataset.plant;
+        const neighborPlant = neighborCell.dataset.plant?.toLowerCase().replace(/\s/g, "");
         if (!neighborPlant || neighborPlant === "nonland") return;
 
         if (compatibility.good.includes(neighborPlant)) {
