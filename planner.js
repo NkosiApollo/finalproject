@@ -16,20 +16,30 @@ const plantIcons = {
   corn: "🌽",
   strawberry: "🍓",
   cabbage: "🥦",
+  cucumber: "🥒",
+  onion: "🧅",
+  sunflower: "🌻",
+  bellpepper: "🫑",
+  flower: "🌸",
   custom: "❓",
   nonland: "⬛",
 };
 
-// Compatibility map (simplified for Saskatchewan planting)
+// Compatibility map (Saskatchewan-specific examples)
 const compatibilityMap = {
-  tomato: { good: ["carrot", "lettuce"], bad: ["potato", "corn"] },
-  carrot: { good: ["tomato", "pea"], bad: [] },
-  lettuce: { good: ["carrot", "strawberry"], bad: ["cabbage"] },
-  potato: { good: ["corn"], bad: ["tomato"] },
-  pea: { good: ["carrot", "lettuce"], bad: ["onion"] },
-  corn: { good: ["potato"], bad: ["tomato"] },
-  strawberry: { good: ["lettuce"], bad: [] },
-  cabbage: { good: [], bad: ["lettuce"] },
+  tomato: { good: ["carrot", "lettuce", "onion", "cucumber"], bad: ["potato", "corn", "cabbage"] },
+  carrot: { good: ["tomato", "pea", "lettuce"], bad: ["dill"] },
+  lettuce: { good: ["carrot", "strawberry", "cucumber"], bad: ["cabbage"] },
+  potato: { good: ["corn", "cabbage"], bad: ["tomato", "onion"] },
+  pea: { good: ["carrot", "lettuce", "cucumber"], bad: ["onion"] },
+  corn: { good: ["potato", "cucumber"], bad: ["tomato"] },
+  strawberry: { good: ["lettuce"], bad: ["cabbage"] },
+  cabbage: { good: ["potato"], bad: ["lettuce", "tomato"] },
+  cucumber: { good: ["lettuce", "pea", "sunflower"], bad: ["potato"] },
+  onion: { good: ["tomato", "carrot"], bad: ["pea", "potato"] },
+  sunflower: { good: ["cucumber"], bad: [] },
+  bellpepper: { good: ["onion", "carrot"], bad: ["fennel"] },
+  flower: { good: [], bad: [] },
 };
 
 const compatibilityGood = "#c8e6c9"; // light green
@@ -42,7 +52,7 @@ for (let i = 0; i < gridSize * gridSize; i++) {
   cell.textContent = "";
   cell.style.backgroundColor = "";
   cell.classList.add("grid-cell");
-  
+
   cell.addEventListener("dragover", (e) => e.preventDefault());
   cell.addEventListener("drop", (e) => {
     e.preventDefault();
