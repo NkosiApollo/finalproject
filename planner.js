@@ -12,7 +12,7 @@ const plantIcons = {
   carrot: "🥕",
   lettuce: "🥬",
   potato: "🥔",
-  pea: "🌱",
+  pea: "🫛",
   corn: "🌽",
   strawberry: "🍓",
   cabbage: "🥦",
