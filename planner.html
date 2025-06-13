@@ -4,23 +4,30 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Garden Planner</title>
+
+    <link rel="icon" href="icon.png">
+
+    <link rel="stylesheet" href="style2.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+    <script src="dragon-screensaver.js" defer></script>
+
 <style>
   /* Buttons */
   button {
-    font-family: "Cherry Bomb One", system-ui;
     width: 200px;
     padding: 15px 0;
     text-align: center;
     margin: 20px 10px;
     border-radius: 25px;
     border: none;
-    background-color: #000;
+    background-color: #8f5a30;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
   button:hover {
-    background-color: #444;
+    background-color: #834123;
   }
 
   /* Planner Grid Container */
@@ -34,7 +41,7 @@
     background-color: #e5e5e5;
     border-radius: 10px;
     padding: 10px;
-    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 8px rgba(180, 130, 72, 0.877);
   }
 
   /* Individual Grid Cells */
@@ -79,28 +86,39 @@
 </style>
 </head>
 <body>
+  <div class="banner">
+    <div class="navbar">
+        <img src="icon.png" class="logo">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="planner.html">Planner</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+    </div>
 
-<div id="plant-palette">
-  <div class="plant" draggable="true" data-plant="tomato">🍅</div>
-  <div class="plant" draggable="true" data-plant="carrot">🥕</div>
-  <div class="plant" draggable="true" data-plant="lettuce">🥬</div>
-  <div class="plant" draggable="true" data-plant="potato">🥔</div>
-  <div class="plant" draggable="true" data-plant="pea">🫛</div>
-  <div class="plant" draggable="true" data-plant="corn">🌽</div>
-  <div class="plant" draggable="true" data-plant="strawberry">🍓</div>
-  <div class="plant" draggable="true" data-plant="cabbage">🥦</div>
-  <div class="plant" draggable="true" data-plant="cucumber">🥒</div>
-  <div class="plant" draggable="true" data-plant="onion">🧅</div>
-    <div class="plant" draggable="true" data-plant="sunflower">🌻</div>
+    <div id="plant-palette">
+      <div class="plant" draggable="true" data-plant="tomato">🍅</div>
+      <div class="plant" draggable="true" data-plant="carrot">🥕</div>
+      <div class="plant" draggable="true" data-plant="lettuce">🥬</div>
+      <div class="plant" draggable="true" data-plant="potato">🥔</div>
+      <div class="plant" draggable="true" data-plant="pea">🫛</div>
+      <div class="plant" draggable="true" data-plant="corn">🌽</div>
+      <div class="plant" draggable="true" data-plant="strawberry">🍓</div>
+      <div class="plant" draggable="true" data-plant="cabbage">🥦</div>
+      <div class="plant" draggable="true" data-plant="cucumber">🥒</div>
+      <div class="plant" draggable="true" data-plant="onion">🧅</div>
+      <div class="plant" draggable="true" data-plant="sunflower">🌻</div>
       <div class="plant" draggable="true" data-plant="bellpepper">🫑</div>
-        <div class="plant" draggable="true" data-plant="flower">🌸</div>
-          <div class="plant" draggable="true" data-plant="custom"> ❓</div>
-            <div class="plant" draggable="true" data-plant="nonland"> 🟩 </div>
-</div>
+      <div class="plant" draggable="true" data-plant="flower">🌸</div>
+      <div class="plant" draggable="true" data-plant="custom"> ❓</div>
+      <div class="plant" draggable="true" data-plant="nonland"> 🟩 </div>
+    </div>
 
-<div id="garden-grid"></div>
+    <div id="garden-grid"></div>
 
-<button id="download-btn">Download Plot</button>
+    <button id="download-btn">Download Plot</button>
+  </div>
 
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
